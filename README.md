@@ -4,13 +4,11 @@ Después de reconstruir la comunicación mundial con sockets, pensaste que el ca
 Error.
 
 Los mensajes ahora fluyen, pero el sistema comercial de la colonia empezó a fallar:
-
     Pedidos que cambian de estado sin explicación
     Pagos que no aparecen cuando alguien los reclama
     Auditorías que preguntan: “¿Quién modificó esto y cuándo?”
 
 Un mensaje aparece en la consola:
-
     “Persistir no es guardar datos. Es poder defenderlos.”
 
 La Academia exportó todo a archivos CSV. Datos crudos. Sin garantías. Sin integridad. Tu misión ya no es comunicar sistemas. Es construir el núcleo transaccional real de Penguin Academy.
@@ -19,7 +17,6 @@ Tenés 1 semana. Tu herramienta: SQL.
 2️⃣ Objetivo del Challenge 🎯
 
 Construir una base de datos relacional funcional que permita:
-
     Crear las tablas necesarias a partir del dominio implícito en los CSV
     Insertar los datos respetando reglas de integridad
     Definir relaciones mediante PK y FK
@@ -28,7 +25,6 @@ Construir una base de datos relacional funcional que permita:
 
 No se evalúa solo que funcione. Se evalúa si el diseño tiene criterio y se puede defender.
 3️⃣ Habilidades que vas a tener que invocar 🧠
-
     📥 Importación ordenada desde CSV
     🧱 Modelado relacional
     🔐 PK, FK, NOT NULL y CHECK
@@ -38,9 +34,7 @@ No se evalúa solo que funcione. Se evalúa si el diseño tiene criterio y se pu
     🔒 Comprensión de SQL Injection
 
 4️⃣ Motor de Base de Datos 🗄️
-
 Podés usar cualquier motor relacional:
-
     SQLite
     PostgreSQL
     MySQL / MariaDB
@@ -49,7 +43,6 @@ Podés usar cualquier motor relacional:
 
 Condición obligatoria:
 Debés justificar técnicamente tu elección explicando:
-
     Ventajas en este contexto
     Manejo de integridad referencial
     Soporte para constraints e índices
