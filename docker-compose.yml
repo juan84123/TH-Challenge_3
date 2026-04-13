@@ -1,13 +1,18 @@
 services:
-  db:
-    image: postgres:16  # La versión que elegimos
-    container_name: th-challenge3
-    restart: always
+  postgres_db:
+    image: postgres:15
+    container_name: penguin_sql_challenge
     environment:
-      - POSTGRES_USER=juan_vicente
-      - POSTGRES_PASSWORD=penguin2026  # Cambiala si querés, pero anotala
-      - POSTGRES_DB=academia_db
+      POSTGRES_USER: juan_gonzalez
+      POSTGRES_PASSWORD: penguin_password
+      POSTGRES_DB: penguin_academy
     ports:
-      - "5432:5432"  # El puente entre Docker y tu Windows
+      - "5432:5432"
     volumes:
-      - ./postgres_data:/var/lib/postgresql/data # Para que tus datos no se borren al apagar
+      # Esto vincula tu carpeta local 'data' con una carpeta dentro del contenedor
+      - ./data:/container_data
+      # Para que los datos no se borren si apagas el contenedor
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

@@ -1,0 +1,78 @@
+// Esquema de Base de Datos
+// Proyecto: th-challenge3
+
+Table customers {
+  customer_id int [pk]
+  full_name varchar
+  email varchar
+  phone varchar
+  city varchar
+  segment varchar
+  created_at timestamp
+  is_active boolean
+  deleted_at timestamp
+}
+
+Table products {
+  product_id int [pk]
+  sku varchar [unique]
+  product_name varchar
+  category varchar
+  brand varchar
+  unit_price decimal
+  unit_cost decimal
+  created_at timestamp
+  is_active boolean
+  deleted_at timestamp
+}
+
+Table orders {
+  order_id int [pk]
+  customer_id int [ref: > customers.customer_id]
+  order_datetime timestamp
+  channel varchar
+  currency varchar
+  current_status varchar
+  order_total decimal
+  is_active boolean
+  deleted_at timestamp
+}
+
+Table order_items {
+  order_item_id int [pk]
+  order_id int [ref: > orders.order_id]
+  product_id int [ref: > products.product_id]
+  quantity int
+  unit_price decimal
+  discount_rate decimal
+  line_total decimal
+}
+
+Table payments {
+  payment_id int [pk]
+  order_id int [ref: > orders.order_id]
+  payment_datetime timestamp
+  method varchar
+  payment_status varchar
+  amount decimal
+  currency varchar
+}
+
+Table order_status_history {
+  status_history_id int [pk]
+  order_id int [ref: > orders.order_id]
+  status varchar
+  changed_at timestamp
+  changed_by varchar
+  reason text
+}
+
+Table order_audit {
+  audit_id int [pk]
+  order_id int [ref: > orders.order_id]
+  field_name varchar
+  old_value varchar
+  new_value varchar
+  changed_at timestamp
+  changed_by varchar
+}
