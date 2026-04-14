@@ -1,0 +1,133 @@
+Script de Creación: customers
+CREATE TABLE customers (
+    customer_id INT PRIMARY KEY,
+    full_name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    phone VARCHAR(100),
+    city VARCHAR(100) NOT NULL CHECK (city IN (
+        'Asunción', 'Capiatá', 'Ciudad del Este', 'Lambaré', 
+        'San Lorenzo', 'Ñemby', 'Fernando de la Mora', 
+        'Luque', 'Encarnación', 'Villa Elisa'
+    )),
+    segment VARCHAR(50) NOT NULL CHECK (segment IN (
+        'retail', 'wholesale', 'online_only', 'vip'
+    )),
+    created_at TIMESTAMP NOT NULL,
+    is_active BOOLEAN DEFAULT TRUE,
+    deleted_at TIMESTAMP, 
+    CONSTRAINT check_dates CHECK (deleted_at IS NULL OR deleted_at >= created_at)
+);
+
+Script de Creación: products
+CREATE TABLE products (
+    product_id INT PRIMARY KEY,
+    sku VARCHAR(100) UNIQUE NOT NULL,
+    product_name VARCHAR(100) NOT NULL,  
+    category VARCHAR(100) NOT NULL CHECK (category IN (
+        'automotive', 'beauty', 'books', 'electronics', 
+        'fashion', 'grocery', 'home', 'office', 
+        'sports', 'toys'
+    )),    
+    brand VARCHAR(100) CHECK (brand IN (
+        'Andes', 'Aurea', 'Krypton', 'Luna', 
+        'Mares', 'Nexo', 'Nova', 'Orion', 
+        'Pampa', 'Senda'
+    )),
+    unit_price NUMERIC NOT NULL CHECK (unit_price >= 0),
+    unit_cost NUMERIC NOT NULL CHECK (unit_cost >= 0),    
+    created_at TIMESTAMP NOT NULL,
+    is_active BOOLEAN DEFAULT TRUE,
+    deleted_at TIMESTAMP,
+    CONSTRAINT check_profitability CHECK (unit_price >= unit_cost),
+    CONSTRAINT check_product_dates CHECK (deleted_at IS NULL OR deleted_at >= created_at)
+);
+
+Script de Creación: payments
+CREATE TABLE payments (
+    payment_id INT PRIMARY KEY,
+    order_id INT NOT NULL,
+    payment_datetime TIMESTAMP NOT NULL,
+    method VARCHAR(50) NOT NULL CHECK (method IN (
+        'card', 'cash', 'transfer', 'wallet'
+    )),    
+    payment_status VARCHAR(50) NOT NULL CHECK (payment_status IN (
+        'approved', 'pending', 'refunded', 'rejected'
+    )),
+    amount NUMERIC NOT NULL CHECK (amount > 0),
+    currency VARCHAR(10) NOT NULL CHECK (currency IN ('PYG', 'USD')),
+    CONSTRAINT fk_order_payment FOREIGN KEY (order_id) REFERENCES orders(order_id)
+);
+
+Script de Creación: orders
+CREATE TABLE orders (
+    order_id INT PRIMARY KEY,
+    customer_id INT NOT NULL,
+    order_datetime TIMESTAMP NOT NULL,
+    channel VARCHAR(50) NOT NULL CHECK (channel IN (
+        'mobile', 'phone', 'store', 'web'
+    )),
+    currency VARCHAR(10) NOT NULL CHECK (currency IN ('PYG', 'USD')),
+    current_status VARCHAR(50) NOT NULL CHECK (current_status IN (
+        'cancelled', 
+    'created', 
+    'delivered', 
+    'packed', 
+    'paid', 
+    'refunded', 
+    'shipped'
+    )),
+    order_total NUMERIC NOT NULL CHECK (order_total >= 0),
+    is_active BOOLEAN DEFAULT TRUE,
+    deleted_at TIMESTAMP,
+    CONSTRAINT fk_customer FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
+    CONSTRAINT check_order_dates CHECK (deleted_at IS NULL OR deleted_at >= order_datetime)
+);
+
+
+Script de Creación: order_items
+CREATE TABLE order_items (
+    order_item_id INT PRIMARY KEY,
+    order_id INT NOT NULL,
+    product_id INT NOT NULL,
+    quantity INT NOT NULL CHECK (quantity > 0),
+    unit_price NUMERIC NOT NULL CHECK (unit_price >= 0),
+    discount_rate NUMERIC DEFAULT 0 CHECK (discount_rate >= 0 AND discount_rate <= 1), -- Porcentaje entre 0 y 1
+    line_total NUMERIC NOT NULL CHECK (line_total >= 0),
+    CONSTRAINT fk_order_item_order FOREIGN KEY (order_id) REFERENCES orders(order_id),
+    CONSTRAINT fk_order_item_product FOREIGN KEY (product_id) REFERENCES products(product_id)
+);
+
+
+Script de Creación: order_status_history
+CREATE TABLE order_status_history (
+    status_history_id INT PRIMARY KEY,
+    order_id INT NOT NULL,
+    status VARCHAR(50) NOT NULL CHECK (status IN (
+        'created', 'paid', 'packed', 'shipped', 'delivered', 'cancelled', 'refunded'
+    )),
+    changed_at TIMESTAMP NOT NULL,
+    changed_by VARCHAR(50) NOT NULL CHECK (changed_by IN (
+        'ops', 'payment_gateway', 'system', 'user', 'warehouse'
+    )),
+    reason VARCHAR(100) CHECK (reason IN (
+        'chargeback', 'customer_request', 'fraud_check', 'out_of_stock', 
+        'payment_failed', 'return', 'service_issue'
+    )),
+    CONSTRAINT fk_order_history FOREIGN KEY (order_id) REFERENCES orders(order_id)
+);
+
+Script de Creación: order_audit
+CREATE TABLE order_audit (
+    audit_id INT PRIMARY KEY,
+    order_id INT NOT NULL,
+    field_name VARCHAR(100) NOT NULL CHECK (field_name IN (
+        'current_status', 'customer_phone', 'notes', 'order_total', 'shipping_address'
+    )),
+    old_value TEXT,
+    new_value TEXT,
+    changed_at TIMESTAMP NOT NULL,
+    changed_by VARCHAR(50) NOT NULL CHECK (changed_by IN (
+        'ops', 'support', 'system'
+    )),
+    CONSTRAINT fk_order_audit FOREIGN KEY (order_id) REFERENCES orders(order_id)
+);
