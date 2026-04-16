@@ -1,0 +1,53 @@
+{
+  "version": "1.0.0",
+  "darkMode": true,
+  "gridEnabling": false,
+  "detailLevel": "All",
+  "tablePositions": [
+    {
+      "name": "customers",
+      "schemaName": "public",
+      "x": 128.25788225446433,
+      "y": 458.7972123200959
+    },
+    {
+      "name": "products",
+      "schemaName": "public",
+      "x": 1104.2730788371207,
+      "y": 307.51513775986143
+    },
+    {
+      "name": "orders",
+      "schemaName": "public",
+      "x": 500.5176718250267,
+      "y": 307.8298865605011
+    },
+    {
+      "name": "order_items",
+      "schemaName": "public",
+      "x": 825.0445861165713,
+      "y": 307.8298865605011
+    },
+    {
+      "name": "payments",
+      "schemaName": "public",
+      "x": 489.3457968250267,
+      "y": -1.2495134107462178
+    },
+    {
+      "name": "order_status_history",
+      "schemaName": "public",
+      "x": 120.03669084821433,
+      "y": 173.25729775605836
+    },
+    {
+      "name": "order_audit",
+      "schemaName": "public",
+      "x": 513.9429647937767,
+      "y": 728.764538079691
+    }
+  ],
+  "tableGroupCollapseStates": [],
+  "stickyNoteLayouts": [],
+  "referencePaths": []
+}

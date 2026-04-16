@@ -76,7 +76,6 @@ Si todo entra sin errores, el diseño es débil.
 5.3 Integridad y Restricciones
 
 El modelo debe incluir, cuando corresponda:
-
     Claves primarias reales
     Claves foráneas reales
     NOT NULL coherentes
@@ -88,7 +87,6 @@ Nada decorativo. Todo defendible.
 5.4 Consultas Estructurales (sin agregaciones)
 
 Las consultas deben permitir:
-
     Navegar el modelo
     Relacionar entidades
     Rastrear estados y eventos
@@ -98,9 +96,7 @@ Solo se permite usar: SELECT, JOIN, WHERE, ORDER BY.
 No se permiten: GROUP BY, Funciones de agregación.
 El foco es estructura y diseño, no métricas.
 5.5 Validación de Integridad
-
 Debés construir consultas que detecten:
-
     Relaciones rotas
     Valores inválidos
     Entidades incompletas
@@ -111,7 +107,6 @@ La base debe poder señalar sus propias fallas.
 5.6 Seguridad – SQL Injection 🔒
 
 Debés explicar claramente:
-
     Cómo ocurre una SQL Injection
     Qué práctica la habilita
     Qué consecuencias puede tener

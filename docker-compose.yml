@@ -1,0 +1,13 @@
+services:
+  db:
+    image: postgres:16  # La versión que elegimos
+    container_name: th-challenge3
+    restart: always
+    environment:
+      - POSTGRES_USER=juan_vicente
+      - POSTGRES_PASSWORD=penguin2026  # Cambiala si querés, pero anotala
+      - POSTGRES_DB=academia_db
+    ports:
+      - "5432:5432"  # El puente entre Docker y tu Windows
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data # Para que tus datos no se borren al apagar
