@@ -38,7 +38,7 @@ Table orders {
   deleted_at timestamp
 }
 
-Table order_items {
+Table order_items { // tabla union, resuelve el N:M , junto con orders-order_items resuelve
   order_item_id int [pk]
   order_id int [ref: > orders.order_id]
   product_id int [ref: > products.product_id]

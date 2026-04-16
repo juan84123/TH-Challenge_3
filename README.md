@@ -119,3 +119,44 @@ No respuestas superficiales.
     Comparación de performance con y sin índices
     Dockerización del entorno
     Reglas fuertes a nivel de modelo
+
+
+select  c.cust_name AS Customer Name, 
+        c.city, 
+        s.name as Salesman, 
+        s.city as salesman city
+        s.commission 
+
+from customer c
+inner join salesman s
+on c.salesman_id = s.salesman_id
+where s.comission > 0.12; and c.city <> s.city;
+Customer Name, customer city, Salesman, commission
+
+select  o.ord_no, 
+        o.ord_date, 
+        o.purch_amt, 
+        c.cust_name as Customer Name, 
+        c.grade, 
+        s.name as Salesman, 
+        s.commission
+form order o
+inner join customer c
+on o.customer_id = c.customer_id  
+inner join salesman s
+on s.salesman_id = c.salesman_id;
+
+
+select *
+from orders
+inner join 
+
+select  c.full_name as nombre del cliente,
+        o.order_id as nombre del producto,
+        oi.cant as cantidad
+from customers c
+join orders o on o.costumer_id = c.costumer_id
+join order_items oi on o.order_id = oi.order_id
+join products p on p.order_id = oi.order_id; 
+where c.full_name is = 'Juan Vicente González'
+order by cantidad desc
