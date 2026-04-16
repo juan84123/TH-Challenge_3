@@ -1,0 +1,8 @@
+# Ignorar los datos internos de Postgres
+pgdata/
+/var/lib/postgresql/data
+
+# Ignorar archivos temporales o de sistema
+.DS_Store
+__pycache__/
+.env
